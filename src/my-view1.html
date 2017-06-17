@@ -1,0 +1,118 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/lss-paper-date-picker/lss-paper-date-picker.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+
+
+
+<dom-module id="my-view1">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+      paper-button {
+          margin-left: 10px;
+          margin-right: 10px;
+      }
+      .new-todo-wrapper {
+          border: 1px solid #90A4AE;
+          border-radius: 3px;
+          padding: 20px;
+      }
+      paper-button {
+          margin-left: 10px;
+          margin-right: 10px;
+      }
+      div.item {
+          padding: 10px;
+          border-bottom: 2px solid #000;
+      }
+    </style>
+
+    <div class="card">
+      <div class="circle">1</div>
+      <div class="new-todo-wrapper">
+        <form is="iron-form" id="newToDoForm" method="post">
+          <paper-input placeholder="Task" value="{{todo.task}}"></paper-input>
+          <lss-paper-date-picker date-string="2012-03-04" date="{{datePicked}}"></lss-paper-date-picker>
+          <paper-button toggles raised on-tap="add">
+              <iron-icon icon="add"></iron-icon>
+              add todo
+          </paper-button>
+        </form>
+      </div>
+
+      <iron-list items="[[todos]]" as="item">
+          <template>
+              <div class="item">
+                  <b>#[[index]] - [[item.title]]</b>
+              </div>
+          </template>
+      </iron-list>
+    </div>
+  </template>
+
+  <script>
+  Polymer({
+    is: "my-view1",
+    
+    properties: {
+     'newTitle': {
+         type: String,
+         reflectToAttribute: true,
+         value: null
+     },
+     'hostValue': {
+         type: String,
+         value: null
+     },
+     'test': {
+         type: String,
+         reflectToAttribute: true,
+         value: "",
+         notify: true
+     },
+     'newDate': {
+         type: String,
+         value: null
+     }
+    },
+    ready: function (e) {
+     console.log("READY");
+     //this.newItem = {title: '', date: ''};
+     this.todos = [
+         {title: 'Do Something 1', date: '12-31-17'},
+         {title: 'Get food', date: '07-18-17'}
+     ];
+    },
+    add: function () {
+     console.log(this.hostValue);
+     console.log(this.test);
+    }
+    });
+    /*
+    newToDoForm.addEventListener('iron-form-submit', function(event) {
+    var data = JSON.stringify(event.detail);
+    console.log("Data: ", data);
+    });
+    */
+  </script>
+</dom-module>
